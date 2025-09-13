@@ -1,9 +1,10 @@
 <div class="d-flex justify-content-center mt-4">
   <%= form_with url: filter_date_path, method: :get, local: true,  class: "row g-2 align-items-center" do |f| %>
     <div class="col-auto">
-      <%= f.select :month, Date::MONTHNAMES.compact.each_with_index.map { |m, i| [m, i+1] },
-        { prompt: "Selecciona mes", selected: date_filter&.month  },
-        class: "form-select" %>
+     <%= f.select :month,
+      I18n.t("date.month_names", locale: :es)[1..12].each_with_index.map { |m, i| [m, i+1] },
+      { prompt: "Selecciona mes", selected: date_filter&.month },
+      class: "form-select" %>
     </div>
 
     <div class="col-auto">

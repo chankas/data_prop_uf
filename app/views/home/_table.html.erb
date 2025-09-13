@@ -10,7 +10,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
       <!-- Título centrado -->
       <h3 class="m-0 text-center flex-grow-1">
-        <%= first_day.strftime("%B %Y") %>
+        <%= I18n.l(first_day, format: "%B %Y", locale: :es) %>
       </h3>
       <div class="btn-group" role="group" aria-label="View toggle">
         <button type="button" 

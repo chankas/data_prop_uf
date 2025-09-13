@@ -32,5 +32,6 @@ module DataPropUf
         DolarApiImporter.new(year: Date.current.year, month: Date.current.month).import
       end
     end
+    config.i18n.default_locale = :es
   end
 end
