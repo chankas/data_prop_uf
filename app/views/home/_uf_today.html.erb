@@ -1,0 +1,9 @@
+<div class="p-3 pb-md-4 mx-auto text-center"> 
+  <% if uf_today.present? %>
+  <h1 class="display-4 fw-normal text-body-emphasis">UF de hoy <%= format_currency(uf_today.value) %></h1> 
+  <p class="fs-5 text-body-secondary">Ultima actualización <%= uf_today.date.strftime("%d/%m/%Y") %></p> 
+  <% else %>
+    <h1 class="display-4 fw-normal text-body-emphasis">Lo sentimos</h1> 
+    <p class="fs-5 text-body-secondary">No tenemos información para hoy</p> 
+  <% end %>
+</div>

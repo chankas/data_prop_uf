@@ -1,7 +1,4 @@
-<div class="p-3 pb-md-4 mx-auto text-center"> 
-  <h1 class="display-4 fw-normal text-body-emphasis">UF de hoy $12.345</h1> 
-  <p class="fs-5 text-body-secondary">Ultima actualización 12/09/2025</p> 
-</div>
+<%= render partial: 'uf_today', locals: { uf_today: @uf_today } %>
 <div class="d-flex justify-content-center mt-4">
   <%= form_with url: 'reports_path', method: :get, local: true, class: "row g-2 align-items-center" do |f| %>
     <div class="col-auto">
