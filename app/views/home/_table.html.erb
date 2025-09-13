@@ -1,47 +1,47 @@
-<% if @date_filter.present? %>
-<% require 'date' %>
-<% today = Date.today %>
-<% first_day =  @date_filter.beginning_of_month %>
-<% last_day =  @date_filter.end_of_month %>
-<% days_in_month = (first_day..last_day).to_a %>
+<% if date_filter.present? %>
+  <% require 'date' %>
+  <% today = Date.today %>
+  <% first_day =  date_filter.beginning_of_month %>
+  <% last_day =  date_filter.end_of_month %>
+  <% days_in_month = (first_day..last_day).to_a %>
 
-<div class=" mt-4">
-  <!-- Cabecera con el mes -->
-  <h3 class="text-center mb-3"><%= first_day.strftime("%B %Y") %></h3>
+  <div class=" mt-4">
+    <!-- Cabecera con el mes -->
+    <h3 class="text-center mb-3"><%= first_day.strftime("%B %Y") %></h3>
 
-  <!-- Calendario -->
-  <div class="table-view">
-    <%# Días de la semana comenzando en lunes %>
-    <% ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].each do |day_name| %>
-      <div class="name-day text-center fw-bold"><%= day_name %></div>
-    <% end %>
+    <!-- Calendario -->
+    <div class="table-view">
+      <%# Días de la semana comenzando en lunes %>
+      <% ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].each do |day_name| %>
+        <div class="name-day text-center fw-bold"><%= day_name %></div>
+      <% end %>
 
-    <%# Espacios antes del primer día del mes (ajustado para lunes) %>
-    <% first_wday = first_day.cwday %> <%# 1 = lunes, 7 = domingo %>
-    <% (first_wday - 1).times do %>
-      <div class="empty-day-calendar"></div>
-    <% end %>
+      <%# Espacios antes del primer día del mes (ajustado para lunes) %>
+      <% first_wday = first_day.cwday %> <%# 1 = lunes, 7 = domingo %>
+      <% (first_wday - 1).times do %>
+        <div class="empty-day-calendar"></div>
+      <% end %>
 
-    <%# Días del mes %>
-    <% days_in_month.each_with_index do |day, index| %>
-      <div class="day text-center">
-        <div class="num-day  <%= 'num-today' if day == today %>"><%= day.day %></div>
-        <div class="values-day">
-          <div class="uf-day"><%= uf_value_format(@ufs_for_month[index]) %> </div>
-          <div class="dolar-day"></div>
-        </div>
-      </div>
-      <%# Espacios para formato de tabla primeras dos columnas %>
-      <% if (day.day % 10 == 0) && day.day != 30 %>
-        <div class="empty-day-table">
-          <div class="num-day"> </div>
+      <%# Días del mes %>
+      <% days_in_month.each_with_index do |day, index| %>
+        <div class="day text-center">
+          <div class="num-day  <%= 'num-today' if day == today %>"><%= day.day %></div>
           <div class="values-day">
+            <div class="uf-day"><%= uf_value_format(ufs[index]) %> </div>
+            <div class="dolar-day"> <%= uf_to_dolar_value_format(ufs[index], dolar).html_safe %> </div>
           </div>
         </div>
-      <% end %>      
-    <% end %>
-    <%# Dias faltantes d elos meses con menos de 31 dias %>
-    <% if last_day.day < 31 %>
+        <%# Espacios para formato de tabla primeras dos columnas %>
+        <% if (day.day % 10 == 0) && day.day != 30 %>
+          <div class="empty-day-table">
+            <div class="num-day"> </div>
+            <div class="values-day">
+            </div>
+          </div>
+        <% end %>      
+      <% end %>
+      <%# Dias faltantes d elos meses con menos de 31 dias %>
+      <% if last_day.day < 31 %>
         <% (last_day.day + 1..31).to_a.each do |num_day|%>
           <div class="empty-day-table">
             <div class="num-day"><%= num_day %></div>
@@ -51,6 +51,6 @@
           </div>
         <% end %>
       <% end %>
-
+    </div>
   </div>
-  <% end %>
+<% end %>

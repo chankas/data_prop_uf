@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_13_194715) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_13_203228) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "dolar_values", force: :cascade do |t|
+    t.date "date", null: false
+    t.decimal "value", precision: 15, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["date"], name: "index_dolar_values_on_date"
+  end
 
   create_table "uf_values", force: :cascade do |t|
     t.date "date", null: false

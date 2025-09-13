@@ -29,6 +29,7 @@ module DataPropUf
     config.after_initialize do
       if Rails.env.development?
         UfApiImporter.new(year: Date.current.year).import
+        DolarApiImporter.new(year: Date.current.year, month: Date.current.month).import
       end
     end
   end
