@@ -5,12 +5,31 @@
   <% last_day =  date_filter.end_of_month %>
   <% days_in_month = (first_day..last_day).to_a %>
 
-  <div class=" mt-4">
+  <div class="mt-4" data-controller="view-toggle">
     <!-- Cabecera con el mes -->
-    <h3 class="text-center mb-3"><%= first_day.strftime("%B %Y") %></h3>
-
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <!-- Título centrado -->
+      <h3 class="m-0 text-center flex-grow-1">
+        <%= first_day.strftime("%B %Y") %>
+      </h3>
+      <div class="btn-group" role="group" aria-label="View toggle">
+        <button type="button" 
+          class="btn btn-primary active" 
+          data-view-toggle-target="btnTable"
+          data-action="click->view-toggle#toggleTable">
+          <i class="bi bi-card-list"></i>
+        </button>
+        <button type="button" 
+          class="btn btn-outline-primary" 
+          data-view-toggle-target="btnCalendar"
+          data-action="click->view-toggle#toggleCalendar">
+          <i class="bi bi-calendar-event"></i>
+        </button>
+      </div>
+    </div>
+    
     <!-- Calendario -->
-    <div class="table-view">
+    <div id="final-view" data-view-toggle-target="finalView" class="table-view">
       <%# Días de la semana comenzando en lunes %>
       <% ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].each do |day_name| %>
         <div class="name-day text-center fw-bold"><%= day_name %></div>
