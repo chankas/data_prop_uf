@@ -7,10 +7,10 @@ class HomeController < ApplicationController
 
   private
 
-def day_by(year, month)
-  return unless year && month && year.present?
-  Date.new(year.to_i, month.to_i, 1) rescue nil
-end
+  def day_by(year, month)
+    return unless year && month && year.present?
+    Date.new(year.to_i, month.to_i, 1) rescue nil
+  end
 
   def set_uf_today
     @uf_today = UfValue.today
