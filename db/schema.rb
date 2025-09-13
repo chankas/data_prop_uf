@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_13_141611) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_13_194715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -19,6 +19,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_13_141611) do
     t.decimal "value", precision: 15, scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "period_key", null: false
     t.index ["date"], name: "index_uf_values_on_date"
+    t.index ["period_key"], name: "index_uf_values_on_period_key"
   end
 end
