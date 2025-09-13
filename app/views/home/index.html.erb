@@ -1,24 +1,4 @@
 <%= render partial: 'uf_today', locals: { uf_today: @uf_today } %>
-<div class="d-flex justify-content-center mt-4">
-  <%= form_with url: 'reports_path', method: :get, local: true, class: "row g-2 align-items-center" do |f| %>
-    <div class="col-auto">
-      <%= f.select :month, Date::MONTHNAMES.compact.each_with_index.map { |m, i| [m, i+1] },
-        { prompt: "Selecciona mes" },
-        class: "form-select" %>
-    </div>
-
-    <div class="col-auto">
-      <%= f.select :year, (2020..Date.today.year).to_a.reverse,
-        { prompt: "Selecciona año" },
-        class: "form-select" %>
-    </div>
-
-    <div class="col-auto">
-      <%= f.submit "Buscar", class: "btn btn-primary" %>
-    </div>
-  <% end %>
-</div>
-
-
+<%= render partial: 'date_form', locals: {date_filter: @date_filter} %>
 <%= render 'table' %>
 <% render 'calendar' %>

@@ -1,13 +1,13 @@
-
+<% if @date_filter.present? %>
 <% require 'date' %>
-<% today = Date.today - 1.months %>
-<% first_day = today.beginning_of_month %>
-<% last_day = today.end_of_month %>
+<% today = Date.today %>
+<% first_day =  @date_filter.beginning_of_month %>
+<% last_day =  @date_filter.end_of_month %>
 <% days_in_month = (first_day..last_day).to_a %>
 
 <div class=" mt-4">
   <!-- Cabecera con el mes -->
-  <h3 class="text-center mb-3"><%= today.strftime("%B %Y") %></h3>
+  <h3 class="text-center mb-3"><%= first_day.strftime("%B %Y") %></h3>
 
   <!-- Calendario -->
   <div class="table-view">
@@ -23,20 +23,34 @@
     <% end %>
 
     <%# Días del mes %>
-    <% days_in_month.each do |day| %>
+    <% days_in_month.each_with_index do |day, index| %>
       <div class="day text-center">
         <div class="num-day  <%= 'num-today' if day == today %>"><%= day.day %></div>
         <div class="values-day">
-          <div class="uf-day">$39.485,65 </div>
-          <div class="dolar-day">$ 23,23 <small>USD</small></div>
+          <div class="uf-day"><%= uf_value_format(@ufs_for_month[index]) %> </div>
+          <div class="dolar-day"></div>
         </div>
       </div>
+      <%# Espacios para formato de tabla primeras dos columnas %>
       <% if (day.day % 10 == 0) && day.day != 30 %>
         <div class="empty-day-table">
           <div class="num-day"> </div>
           <div class="values-day">
           </div>
         </div>
-      <% end %>
+      <% end %>      
     <% end %>
+    <%# Dias faltantes d elos meses con menos de 31 dias %>
+    <% if last_day.day < 31 %>
+        <% (last_day.day + 1..31).to_a.each do |num_day|%>
+          <div class="empty-day-table">
+            <div class="num-day"><%= num_day %></div>
+            <div class="values-day">
+              <div class="uf-day">---</div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
   </div>
+  <% end %>
