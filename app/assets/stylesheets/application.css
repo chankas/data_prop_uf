@@ -8,3 +8,103 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+.day, .empty-day-table{
+  border: 1px solid #dee2e6;
+  text-align: center;
+}
+
+.num-day{
+  background-color: #eee;
+}
+.num-today{
+  background-color: #0d6efd;
+}
+
+.values-day {
+  display: flex;
+  flex-direction: column; /* apilar xx arriba, yy abajo */
+  flex: 1; /* ocupa el espacio disponible */
+}
+
+.uf-day{
+  font-size: 1.1em;
+  padding: 5px 0;
+}
+.dolar-day {
+  text-align: center;
+  font-size: .875em;
+}
+
+.calendar-view{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columnas iguales */
+  gap: 10px; /* separación de 10px */
+}
+
+.calendar-view .day, .name-day{
+  border-radius: 5px;
+}
+
+.calendar-view .empty-day-calendar{
+  display: block;
+}
+
+.calendar-view .num-day{
+  border-radius: 5px 5px 0 0;
+  font-size: .9em;
+}
+
+.calendar-view .uf-day{
+  font-size: 1em;
+}
+
+.calendar-view .dolar-day{
+  font-size: .8em;
+  color: #999;
+}
+
+.num-today{
+  background-color: #0d6efd;
+  color: #eee;
+  font-weight: bold;
+}
+
+.calendar-view .empty-day-table{
+  display: none;
+}
+
+@media(max-width:700px){
+  .calendar-view{
+    grid-template-columns: repeat(1, 1fr); /* 7 columnas iguales */
+  }
+  .name-day{
+    display: none;
+  }
+}
+/* Table */
+
+.table-view .name-day, .empty-day-calendar {
+  display: none;
+}
+
+.table-view {
+  display: grid;
+  grid-template-rows: repeat(11, auto); 
+  grid-auto-flow: column;
+  
+}
+
+
+.table-view .day, .empty-day-table {
+  display: flex;
+}
+
+.table-view .num-day {
+  flex: 0 0 70px;   /* ancho fijo */
+  height: 70px;     /* alto fijo, puedes ajustarlo */
+  display: flex;     /* activa flex en este div */
+  align-items: center;  /* centra verticalmente */
+  justify-content: center; /* centra horizontalmente */
+}
+
