@@ -13,6 +13,6 @@ class HomeController < ApplicationController
   end
 
   def set_uf_today
-    @uf_today = UfValue.today
+    @uf_today = UfValue.for_day(Date.current)
   end
 end
