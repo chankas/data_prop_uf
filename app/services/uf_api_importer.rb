@@ -38,7 +38,6 @@ class UfApiImporter
 
   def fetch_data
     uri = URI.parse("#{API_URL}#{date_searches}?apikey=#{API_KEY}&formato=json")
-puts "-----#{uri}----"
     res = Net::HTTP.get_response(uri)
 
     return nil unless res.is_a?(Net::HTTPSuccess)
