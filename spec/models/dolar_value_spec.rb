@@ -1,5 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe DolarValue, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "tiene una factory válida" do
+    dolar = build(:dolar_value)
+    expect(dolar).to be_valid
+  end
+
+  it "no es válido sin fecha" do
+    dolar = build(:dolar_value, date: nil)
+    expect(dolar).not_to be_valid
+  end
+
+  it "no es válido sin valor" do
+    dolar = build(:dolar_value, value: nil)
+    expect(dolar).not_to be_valid
+  end
 end
