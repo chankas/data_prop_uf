@@ -14,13 +14,15 @@ class UfApiImporter
 
   def import
     response = fetch_data
-    return unless response
+    return unless response && response["UFs"].is_a?(Array)
 
     response["UFs"].each do |uf|
-      date = Date.strptime(uf["Fecha"], "%Y-%m-%d") rescue next
+      date = parse_date(uf["Fecha"])
       value = parse_value(uf["Valor"])
 
       next unless date && value
+      next if filter_date?(date) == false
+      next unless value && value > 0
 
       uf_record = UfValue.find_or_initialize_by(date: date)
 
@@ -30,7 +32,6 @@ class UfApiImporter
       elsif uf_record.value != value
         uf_record.update!(value: value)
       end
-      # si es igual, no hacemos nada
     end
   end
 
@@ -39,7 +40,6 @@ class UfApiImporter
   def fetch_data
     uri = URI.parse("#{API_URL}#{date_searches}?apikey=#{API_KEY}&formato=json")
     res = Net::HTTP.get_response(uri)
-
     return nil unless res.is_a?(Net::HTTPSuccess)
 
     JSON.parse(res.body)
@@ -49,14 +49,25 @@ class UfApiImporter
   end
 
   def parse_value(valor_str)
-    # Convertimos "38.419,17" -> 38419.17
-    valor_str.gsub(".", "").gsub(",", ".").to_f rescue nil
+    valor_str.to_s.gsub(".", "").gsub(",", ".").to_f rescue nil
+  end
+
+  def parse_date(date_str)
+    Date.strptime(date_str.to_s, "%Y-%m-%d") rescue nil
+  end
+
+  def filter_date?(date)
+    return false if @year && date.year != @year.to_i
+    return false if @month && date.month != @month.to_i
+    return false if @day && date.day != @day.to_i
+    true
   end
 
   def date_searches
-    return "/#{@year}/#{@mont}/dias/#{@day}" if @year.present? && @month.present? && @day.present?
-    return "/#{@year}/#{@mont}" if @year.present? && @month.present?
-    return "/#{@year}" if @year.present?
-    ""
+    segments = []
+    segments << @year.to_s if @year.present?
+    segments << @month.to_s if @month.present?
+    segments << "dias/#{@day}" if @day.present? && @month.present? && @year.present?
+    segments.empty? ? "" : "/" + segments.join("/")
   end
 end
