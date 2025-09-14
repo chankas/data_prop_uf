@@ -14,6 +14,6 @@ class HomeController < ApplicationController
 
   def set_values_today
     @uf_today = UfValue.for_day(Date.current)
-    @dolar_latest_until_today = DolarValue.latest_until_today
+    @dolar_latest_until_today = DolarToday.new().get
   end
 end
