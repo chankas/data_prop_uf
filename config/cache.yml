@@ -12,5 +12,5 @@ test:
   <<: *default
 
 production:
-  database: primary
+  database: data_prop_uf_production
   <<: *default
