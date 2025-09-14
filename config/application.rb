@@ -27,7 +27,7 @@ module DataPropUf
     #
     # Llamamos al servicio que importa los valores de la UF para poblar la BD
     config.after_initialize do
-      if Rails.env.development?
+      if Rails.env.development? || Rails.env.production?
         UfApiImporter.new(year: Date.current.year).import
         DolarApiImporter.new(year: Date.current.year, month: Date.current.month).import
       end
