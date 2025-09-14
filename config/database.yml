@@ -81,18 +81,19 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: data_prop_uf_production
-    username: data_prop_uf
+    url: <%= ENV["DATABASE_URL"] %>
+    database: data_prop_uf_production_po1e
+    username: data_prop_uf_production_po1e_user
     password: <%= ENV["DATA_PROP_UF_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: data_prop_uf_production_cache
+    database: data_prop_uf_production
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: data_prop_uf_production_queue
+    database: data_prop_uf_production
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: data_prop_uf_production_cable
+    database: data_prop_uf_production
     migrations_paths: db/cable_migrate
